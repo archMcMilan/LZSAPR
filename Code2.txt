@@ -1,0 +1,11 @@
+main(
+int a1,b,i,f,j;){
+scanf %i.b;
+for i=1 to b+1 by 2 while i<10{
+for j=1 to b+1 by 2 while j<10{
+printf %i.i;
+printf %i.j;
+}end;
+}end;
+if i<9 then printf %i.i;
+}

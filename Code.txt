@@ -1,0 +1,10 @@
+main(
+int a1,b,i,f;){
+scanf %i.b;
+b=b+5;
+scanf %i.f;
+if f<11 then printf %i.f;
+for i=1 to b+5 by f+2 while i<10||i>5{
+for i=1 to b+5 by f+2 while i<10{
+printf %i.i }end;}end;
+}

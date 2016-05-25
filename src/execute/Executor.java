@@ -51,7 +51,7 @@ public class Executor {
     private LinkedList<Integer> workCells = new LinkedList<>();//список рабочих меток
     private LinkedList<Integer> labelsPosI = new LinkedList<>();//позиции наальной метки в цикле
     private LinkedList<Integer> labelsPosJ = new LinkedList<>();//позиции наальной метки в цикле
-    private LinkedList<Integer> label=new LinkedList<>();//позиции выхода из цикла
+    private LinkedList<Integer> label = new LinkedList<>();//позиции выхода из цикла
 
     public static final String TO = "1 = m[";
     public static final String BY = "= r[";
@@ -126,7 +126,11 @@ public class Executor {
                             if (codeScanOrPrint == SCANF) {//если это scanf
                                 scanMessage();
                             } else if (codeScanOrPrint == PRINTF) {
-                                printMessage(idOrCon());
+                                String key = "";
+                                if (stack.getLast().getCode() == ID) {//если справа id
+                                    key = stack.getLast().getLexem();
+                                }
+                                printMessage(idOrCon(), key);
                             }
                         }
                     } else if (code >= NON_EQUAL && code <= EQUAL) {
@@ -164,7 +168,7 @@ public class Executor {
                             if (!logicOperator(EQUAL)) {
                                 if (!findUpl()) {
                                     upl();
-                   }
+                                }
                             }
                         }
                     } else if (code >= AND && code <= OR) {
@@ -226,7 +230,7 @@ public class Executor {
                             workCells.pollLast();
                             workCells.pollLast();
                             workCells.pollLast();
-                            findLabelInPoliz(label.getLast());
+                            findLabel(label.getLast());
                             //System.out.println("out2:"+i+" "+j+" "+label+" "+labelsPosI+" "+labelsPosJ);
                             label.pollLast();
                             labelsPosI.pollLast();
@@ -270,6 +274,16 @@ public class Executor {
         output += message + "\n";
     }
 
+    public void printMessage(int message,String key) {
+        if(key.length()==0){
+            printMessage(message);
+        }else{
+            System.out.println("Output:"+key+"=" + message);
+            output += message + "\n";
+        }
+
+    }
+
     public void scanMessage() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Input:");
@@ -310,6 +324,14 @@ public class Executor {
                     } else {
                         j++;
                     }
+                } else if (poliz.get(i).get(j) instanceof String) {
+                    if (((String) poliz.get(i).get(j)).contains("m[" + label + "]:")) {
+                        j++;
+                        exitFlag = true;
+                        break;
+                    } else {
+                        j++;
+                    }
                 } else {
                     j++;
                 }
@@ -323,7 +345,7 @@ public class Executor {
         }
     }
 
-    private void findLabelInPoliz(int label) {
+    /*private void findLabelInPoliz(int label) {
         boolean exitFlag = false;
         while (i < poliz.size()) {
             while (j < poliz.get(i).size()) {
@@ -345,7 +367,7 @@ public class Executor {
             i++;
             j = 0;
         }
-    }
+    }*/
 
 
     public boolean findUpl() {
